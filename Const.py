@@ -30,7 +30,8 @@ WINDOW_SIZE = (800, 800)
 ARENA_SIZE = (800, 800)
 BACKGROUND_COLOR = pg.Color('black')
 PLAYER_COLOR = [pg.Color('green'), pg.Color('magenta')]
-SWITCH_PLAYER_COUNTDOWN_RECT = pg.Rect(700, 30, 80, 30)
+SWITCH_PLAYER_COUNTDOWN_RECT = pg.Rect(705, 45, 80, 30)
+GAME_COUNTDOWN_POSITION_TOPRIGHT = (785, 15)
 
 
 # controller

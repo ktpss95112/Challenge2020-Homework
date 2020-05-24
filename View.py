@@ -82,6 +82,11 @@ class GraphicalView:
         current_rect.right = Const.SWITCH_PLAYER_COUNTDOWN_RECT.right
         pg.draw.rect(self.screen, Const.PLAYER_COLOR[self.model.attack], current_rect)
 
+        # draw game countdown
+        font = pg.font.Font(None, 36)
+        text_surface = font.render(f'{self.model.timer / Const.FPS:.2f}', 1, pg.Color('white'))
+        self.screen.blit(text_surface, text_surface.get_rect(topright=Const.GAME_COUNTDOWN_POSITION_TOPRIGHT))
+
         pg.display.flip()
 
     def render_stop(self):
