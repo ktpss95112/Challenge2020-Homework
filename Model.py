@@ -75,7 +75,7 @@ class GameEngine:
         self.clock = pg.time.Clock()
         self.state_machine.push(Const.STATE_MENU)
         self.players = [Player(0), Player(1)]
-        self.attack, self.defense = 0, 1
+        self.attack, self.defense = 1, 0
         self.switch_attack_defense_countdown = Const.SWITCH_PLAYER_INTERVAL
         self.winner = None
 
