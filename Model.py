@@ -75,6 +75,7 @@ class GameEngine:
         self.clock = pg.time.Clock()
         self.state_machine.push(Const.STATE_MENU)
         self.players = [Player(0), Player(1)]
+        self.winner = None
 
     def notify(self, event: BaseEvent):
         '''
@@ -89,6 +90,10 @@ class GameEngine:
                 self.update_menu()
             elif cur_state == Const.STATE_PLAY:
                 self.update_objects()
+
+                if self.player_collision_detection():
+                    self.winner = self.attack
+                    self.state_machine.push(Const.STATE_ENDGAME)
 
                 self.timer -= 1
                 if self.timer == 0:
@@ -132,6 +137,14 @@ class GameEngine:
         For example: scoreboard
         '''
         pass
+
+    def player_collision_detection(self):
+        '''
+        Test if the two player collide with each other.
+        '''
+        c0, r0, c1, r1 = self.players[0].position, Const.PLAYER_RADIUS, self.players[1].position, Const.PLAYER_RADIUS
+        if c0.distance_to(c1) < (r0 + r1):
+            return True
 
     def run(self):
         '''
