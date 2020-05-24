@@ -75,6 +75,8 @@ class GameEngine:
         self.clock = pg.time.Clock()
         self.state_machine.push(Const.STATE_MENU)
         self.players = [Player(0), Player(1)]
+        self.attack, self.defense = 0, 1
+        self.switch_attack_defense_countdown = Const.SWITCH_PLAYER_INTERVAL
         self.winner = None
 
     def notify(self, event: BaseEvent):
@@ -129,7 +131,12 @@ class GameEngine:
         Update the objects not controlled by user.
         For example: obstacles, items, special effects
         '''
-        pass
+        self.switch_attack_defense_countdown -= 1
+        if self.switch_attack_defense_countdown == 0:
+            self.attack, self.defense = self.defense, self.attack
+            self.players[self.attack].update_speed('attack')
+            self.players[self.defense].update_speed('defense')
+            self.switch_attack_defense_countdown = Const.SWITCH_PLAYER_INTERVAL
 
     def update_endgame(self):
         '''
@@ -175,3 +182,9 @@ class Player:
         # clipping
         self.position.x = max(0, min(Const.ARENA_SIZE[0], self.position.x))
         self.position.y = max(0, min(Const.ARENA_SIZE[1], self.position.y))
+
+    def update_speed(self, status: str):
+        '''
+        self.speed = Const.SPEED_ATTACK if status == 'attack' else Const.SPEED_DEFENSE
+        '''
+        self.speed = Const.SPEED_ATTACK if status == 'attack' else Const.SPEED_DEFENSE
