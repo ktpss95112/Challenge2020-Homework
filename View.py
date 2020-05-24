@@ -75,6 +75,13 @@ class GraphicalView:
             center = list(map(int, player.position))
             pg.draw.circle(self.screen, Const.PLAYER_COLOR[player.player_id], center, Const.PLAYER_RADIUS)
 
+        # draw model.switch_attack_defense_countdown
+        current_rect = Const.SWITCH_PLAYER_COUNTDOWN_RECT.copy()
+        percent = self.model.switch_attack_defense_countdown / Const.SWITCH_PLAYER_INTERVAL
+        current_rect.width *= percent
+        current_rect.right = Const.SWITCH_PLAYER_COUNTDOWN_RECT.right
+        pg.draw.rect(self.screen, Const.PLAYER_COLOR[self.model.attack], current_rect)
+
         pg.display.flip()
 
     def render_stop(self):
