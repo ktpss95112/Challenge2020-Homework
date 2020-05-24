@@ -93,10 +93,6 @@ class GameEngine:
             elif cur_state == Const.STATE_PLAY:
                 self.update_objects()
 
-                if self.player_collision_detection():
-                    self.winner = self.attack
-                    self.state_machine.push(Const.STATE_ENDGAME)
-
                 self.timer -= 1
                 if self.timer == 0:
                     self.ev_manager.post(EventTimesUp())
@@ -131,6 +127,11 @@ class GameEngine:
         Update the objects not controlled by user.
         For example: obstacles, items, special effects
         '''
+        if self.player_collision_detection():
+            self.winner = self.attack
+            self.state_machine.push(Const.STATE_ENDGAME)
+            return
+
         self.switch_attack_defense_countdown -= 1
         if self.switch_attack_defense_countdown == 0:
             self.attack, self.defense = self.defense, self.attack
