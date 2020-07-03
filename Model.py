@@ -73,6 +73,7 @@ class GameEngine:
         This method is called when a new game is instantiated.
         '''
         self.clock = pg.time.Clock()
+        self.timer = Const.GAME_LENGTH
         self.state_machine.push(Const.STATE_MENU)
         self.players = [Player(0), Player(1)]
 
@@ -140,7 +141,6 @@ class GameEngine:
         '''
         self.running = True
         self.ev_manager.post(EventInitialize())
-        self.timer = Const.GAME_LENGTH
         while self.running:
             self.ev_manager.post(EventEveryTick())
             self.clock.tick(Const.FPS)
@@ -149,7 +149,7 @@ class GameEngine:
 class Player:
     def __init__(self, player_id):
         self.player_id = player_id
-        self.position = Const.PLAYER_INIT_POSITION[player_id] # is a pg.Vector2
+        self.position = pg.Vector2(Const.PLAYER_INIT_POSITION[player_id])
         self.speed = Const.SPEED_ATTACK if player_id == 1 else Const.SPEED_DEFENSE
 
     def move_direction(self, direction: str):
